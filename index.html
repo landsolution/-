@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Land Service Bangladesh | স্মার্ট ভূমি সেবা</title>
+    <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+    <style>
+        :root {
+            --gov-green: #006a4e;
+            --gov-red: #da291c;
+            --light-bg: #f4f7f6;
+            --text-dark: #222222;
+            --shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'SolaimanLipi', Arial, sans-serif; 
+            background-color: var(--light-bg); 
+            color: var(--text-dark); 
+            line-height: 1.5;
+        }
+
+        header { 
+            background: linear-gradient(135deg, #006a4e 0%, #004d39 100%); 
+            color: #fff; 
+            padding: 30px 15px; 
+            text-align: center; 
+            border-bottom: 5px solid var(--gov-red); 
+        }
+        header h1 { font-size: 32px; font-weight: bold; margin-bottom: 8px; }
+        header p { font-size: 18px; opacity: 0.95; }
+
+        .main-container { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border-bottom: 3px solid var(--gov-green);
+        }
+        .stat-number { font-size: 22px; font-weight: bold; color: var(--gov-green); }
+        .stat-label { font-size: 14px; color: #555; }
+
+        .instruction-box { 
+            background: #e8f5e9; 
+            border-left: 5px solid var(--gov-green); 
+            padding: 12px 15px; 
+            margin-bottom: 20px; 
+            border-radius: 4px; 
+            font-size: 16px;
+            font-weight: bold; 
+            color: #1b5e20; 
+        }
+        
+        .section-heading {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--gov-green);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-bottom: 35px; }
+
+        /* Service Cards & Checkbox Fix */
+        .service-card { 
+            background: #fff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            box-shadow: var(--shadow); 
+            transition: var(--transition); 
+            border: 2px solid #dcdcdc; 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+            user-select: none;
+            position: relative;
+        }
+        .service-card:hover { border-color: var(--gov-green); }
+        
+        .service-card.selected { 
+            border-color: var(--gov-green) !important; 
+            background-color: #e8f5e9 !important; 
+        }
+
+        .custom-checkbox { 
+            width: 22px; 
+            height: 22px; 
+            border: 2px solid var(--gov-green); 
+            border-radius: 4px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: #fff; 
+            margin-right: 12px;
+            flex-shrink: 0; 
+            font-weight: bold;
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .service-card.selected .custom-checkbox { 
+            background: var(--gov-green); 
+        }
+        
+        .service-card.selected .custom-checkbox::after { 
+            content: '✓'; 
+        }
+
+        .card-info { display: flex; flex-direction: column; pointer-events: none; }
+        .card-title { font-size: 17px; font-weight: bold; color: #1a2530; }
+        .card-price { font-size: 15px; font-weight: bold; color: var(--gov-green); margin-top: 2px; }
+
+        .contact-panel { 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            border-left: 5px solid var(--gov-red); 
+            margin-bottom: 40px; 
+        }
+        .contact-panel h2 { font-size: 22px; color: var(--gov-green); margin-bottom: 8px; }
+        .contact-panel p { font-size: 16px; margin-bottom: 15px; color: #444; }
+        
+        .whatsapp-action-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 10px; 
+            background-color: #25d366; 
+            color: #fff; 
+            padding: 12px 24px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); 
+            cursor: pointer; 
+            border: none; 
+        }
+
+        .review-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            border-top: 4px solid var(--gov-green);
+        }
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .review-form input, .review-form select, .review-form textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        .review-submit-btn {
+            background: var(--gov-green);
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .live-review-card {
+            background: #f9f9f9;
+            padding: 12px;
+            border-left: 4px solid var(--gov-green);
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-float { 
+            position: fixed; 
+            bottom: 25px; 
+            right: 25px; 
+            background-color: #25d366; 
+            color: #fff; 
+            width: 55px; 
+            height: 55px; 
+            border-radius: 50%; 
+            box-shadow: 2px 4px 12px rgba(0,0,0,0.25); 
+            z-index: 999; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            border: none; 
+        }
+
+        footer { 
+            background: #1e2b37; 
+            color: #fff; 
+            text-align: center; 
+            padding: 20px 15px; 
+            font-size: 14px; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Smart Land Service</h1>
+        <p>সহজ, নিরাপদ ও বিশ্বস্ত ডিজিটাল ভূমি সেবা পোর্টাল</p>
+    </header>
+
+    <div class="main-container">
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">৫,০০০+</div>
+                <div class="stat-label">সফলভাবে প্রদত্ত সেবা</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">১০০%</div>
+                <div class="stat-label">সঠিক ও নির্ভুল তথ্য</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">৪.৯ ★</div>
+                <div class="stat-label">গ্রাহক সন্তুষ্টি রেটিং</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">২৪/৭</div>
+                <div class="stat-label">অনলাইন গ্রাহক সহায়তা</div>
+            </div>
+        </div>
+
+        <div class="instruction-box">
+            👉 যে সেবাগুলো নিতে চান সেগুলোর উপর ক্লিক করে টিক মার্ক দিন, তারপর নিচে বা ডানপাশের হোয়াটসঅ্যাপ বাটনে ক্লিক করুন।
+        </div>
+
+        <h2 class="section-heading">আমাদের ডিজিটাল সেবাসমূহ</h2>
+
+        <div class="service-grid">
+            <div class="service-card" onclick="toggleService(this, '১. খারিজের আবেদন (৳ ৫০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">১. খারিজের আবেদন</div>
+                    <div class="card-price">৳ ৫০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '২. অনলাইন খতিয়ান তোলা (৳ ১৭০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">২. অনলাইন খতিয়ান তোলা</div>
+                    <div class="card-price">৳ ১৭০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৩. খাজনার আবেদন (৳ ১০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৩. খাজনার আবেদন</div>
+                    <div class="card-price">৳ ১০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৪. ম্যাপ আবেদন (৳ ৫০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৪. ম্যাপ আবেদন</div>
+                    <div class="card-price">৳ ৫০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৫. নামজারি খতিয়ানের সার্টিফাইড কপি (৳ ৩,৫০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৫. নামজারি খতিয়ানের সার্টিফাইড কপি</div>
+                    <div class="card-price">৳ ৩,৫০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৬. মিসকেস আবেদন (৳ ৫০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৬. মিসকেস আবেদন</div>
+                    <div class="card-price">৳ ৫০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৭. ম্যাপ পেন্টাগ্রাফ (৳ ৭০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৭. ম্যাপ পেন্টাগ্রাফ</div>
+                    <div class="card-price">৳ ৭০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৮. প্লট বা দাগ পরিমাপ বের করা (৳ ৩০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৮. প্লট বা দাগ পরিমাপ বের করা</div>
+                    <div class="card-price">৳ ৩০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য বের করা (৳ ১০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য</div>
+                    <div class="card-price">৳ ১০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '১০. খতিয়ান বিশ্লেষণ (৳ ৩০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">১০. খতিয়ান বিশ্লেষণ</div>
+                    <div class="card-price">৳ ৩০০</div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="toggleService(this, '১১. আইনি পরামর্শ (৳ ৫০০)')">
+                <div class="custom-checkbox"></div>
+                <div class="card-info">
+                    <div class="card-title">১১. আইনি পরামর্শ</div>
+                    <div class="card-price">৳ ৫০০</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-panel">
+            <h2>নির্বাচিত সেবা নিয়ে সরাসরি কথা বলুন</h2>
+            <p>উপরে আপনার পছন্দমতো সেবায় টিক চিহ্ন দিয়ে নিচের বাটনে ক্লিক করুন।</p>
+            <button onclick="sendToWhatsApp()" class="whatsapp-action-btn">
+                WhatsApp-এ অর্ডার পাঠান (01335556732)
+            </button>
+        </div>
+
+        <h2 class="section-heading">গ্রাহকদের লাইভ মতামত ও রিভিউ</h2>
+        <div class="review-box">
+            <form id="reviewForm" class="review-form">
+                <input type="text" id="reviewerName" placeholder="আপনার নাম লিখুন..." required>
+                <select id="reviewerRating">
+                    <option value="5">⭐⭐⭐⭐⭐ (৫/৫ - চমৎকার)</option>
+                    <option value="4">⭐⭐⭐⭐ (৪/৫ - ভালো)</option>
+                    <option value="3">⭐⭐⭐ (৩/৫ - মাঝারি)</option>
+                    <option value="2">⭐⭐ (২/৫ - খারাপ)</option>
+                    <option value="1">⭐ (১/৫ - খুবই খারাপ)</option>
+                </select>
+                <textarea id="reviewerComment" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
+                <button type="submit" class="review-submit-btn">রিভিউ জমা দিন</button>
+            </form>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+
+            <div id="reviewsList">
+                <p style="color: #888; text-align: center;">রিভিউ লোড হচ্ছে...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <button onclick="sendToWhatsApp()" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
+        💬
+    </button>
+
+    <footer>
+        <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
+    </footer>
+
+    <!-- Service Selection & Direct WhatsApp Script -->
+    <script>
+        var selectedServices = [];
+
+        function toggleService(element, serviceName) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedServices = selectedServices.filter(function(item) {
+                    return item !== serviceName;
+                });
+            } else {
+                element.classList.add('selected');
+                selectedServices.push(serviceName);
+            }
+        }
+
+        function sendToWhatsApp() {
+            var phoneNumber = "8801335556732";
+            var text = "আসসালামু আলাইকুম, আমি আপনার ডিজিটাল ভূমি সেবা ওয়েবসাইট থেকে যোগাযোগ করছি।";
+            
+            if (selectedServices.length > 0) {
+                text += "\n\nআমি নিচের সেবাগুলো নিতে আগ্রহী:\n";
+                for (var i = 0; i < selectedServices.length; i++) {
+                    text += (i + 1) + ". " + selectedServices[i] + "\n";
+                }
+                text += "\nঅনুগ্রহ করে এ বিষয়ে তথ্য দিয়ে সাহায্য করুন।";
+            } else {
+                text += " আমার ভূমি সেবা সম্পর্কে কিছু তথ্য প্রয়োজন।";
+            }
+
+            var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(text);
+            window.location.href = url;
+        }
+    </script>
+
+    <!-- Firebase SDK Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD00PYRwrXAzvqKT_bb732de4ae111b8",
+            authDomain: "review-1b10c.firebaseapp.com",
+            databaseURL: "https://review-1b10c-default-rtdb.firebaseio.com",
+            projectId: "review-1b10c",
+            storageBucket: "review-1b10c.firebasestorage.app",
+            messagingSenderId: "1037023361193",
+            appId: "1:1037023361193:web:4e5f5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const reviewsRef = ref(database, 'reviews');
+
+        document.getElementById('reviewForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('reviewerName').value;
+            const rating = document.getElementById('reviewerRating').value;
+            const comment = document.getElementById('reviewerComment').value;
+            const timestamp = new Date().toLocaleDateString('bn-BD');
+
+            push(reviewsRef, {
+                name: name,
+                rating: parseInt(rating),
+                comment: comment,
+                date: timestamp
+            }).then(() => {
+                alert("ধন্যবাদ! আপনার রিভিউটি পোস্ট হয়েছে।");
+                document.getElementById('reviewForm').reset();
+            }).catch((err) => {
+                alert("ত্রুটি: " + err.message);
+            });
+        });
+
+        onValue(reviewsRef, (snapshot) => {
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const reviewsArray = Object.values(data).reverse();
+
+                reviewsArray.forEach((review) => {
+                    const stars = '⭐'.repeat(review.rating);
+                    const reviewCard = document.createElement('div');
+                    reviewCard.className = 'live-review-card';
+
+                    reviewCard.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong style="color: #333; font-size: 15px;">${review.name}</strong>
+                            <span style="font-size: 11px; color: #888;">${review.date}</span>
+                        </div>
+                        <div style="margin: 3px 0;">${stars}</div>
+                        <p style="margin: 0; color: #555; font-size: 14px;">${review.comment}</p>
+                    `;
+
+                    reviewsList.appendChild(reviewCard);
+                });
+            } else {
+                reviewsList.innerHTML = '<p style="color: #888; text-align: center;">এখনও কোনো রিভিউ নেই। আপনার মতামত দিন!</p>';
+            }
+        });
+    </script>
+
+</body>
+                  </html>
+  
