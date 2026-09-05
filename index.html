@@ -24,7 +24,7 @@
             line-height: 1.5;
         }
 
-        /* Header with Land Image Background Overlay */
+        /* Header */
         header { 
             background: linear-gradient(rgba(0, 70, 50, 0.85), rgba(0, 70, 50, 0.85)), 
                         url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
@@ -37,7 +37,6 @@
         header h1 { font-size: 30px; font-weight: bold; margin-bottom: 6px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
         header p { font-size: 16px; opacity: 0.95; margin-bottom: 12px; }
 
-        /* About Us Button in Header */
         .about-btn {
             background-color: #ffffff;
             color: var(--gov-green);
@@ -50,10 +49,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             transition: var(--transition);
         }
-        .about-btn:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.03);
-        }
+        .about-btn:hover { background-color: #f0f0f0; transform: scale(1.03); }
 
         .main-container { max-width: 1000px; margin: 20px auto; padding: 0 10px; }
         
@@ -94,7 +90,7 @@
             text-align: center;
         }
 
-        /* 2-Column Side-by-Side Grid */
+        /* Grid Services Layout */
         .service-grid { 
             display: flex !important;
             flex-wrap: wrap !important;
@@ -139,13 +135,8 @@
             font-size: 12px;
         }
         
-        .service-card.selected .custom-checkbox { 
-            background: var(--gov-green); 
-        }
-        
-        .service-card.selected .custom-checkbox::after { 
-            content: '✓'; 
-        }
+        .service-card.selected .custom-checkbox { background: var(--gov-green); }
+        .service-card.selected .custom-checkbox::after { content: '✓'; }
 
         .card-info { display: flex; flex-direction: column; pointer-events: none; }
         .card-title { font-size: 13px; font-weight: bold; color: #1a2530; line-height: 1.2; }
@@ -180,6 +171,7 @@
             border: none; 
         }
 
+        /* Live Review Box */
         .review-box {
             background: #fff;
             padding: 18px;
@@ -211,12 +203,16 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .review-submit-btn:disabled {
+            background: #888;
+        }
         .live-review-card {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 12px;
             border-left: 4px solid var(--gov-green);
             border-radius: 4px;
             margin-bottom: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
 
         .whatsapp-float { 
@@ -238,7 +234,7 @@
             font-size: 22px;
         }
 
-        /* About Modal Popup Styling */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -270,17 +266,6 @@
             font-weight: bold;
             color: #888;
             cursor: pointer;
-        }
-        .modal-title {
-            color: var(--gov-green);
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .modal-body {
-            font-size: 14px;
-            color: #444;
-            line-height: 1.6;
         }
 
         footer { 
@@ -442,7 +427,9 @@
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
 
-            <div id="reviewsList"></div>
+            <div id="reviewsList">
+                <p style="color: #888; text-align: center;">রিভিউ লোড করা হচ্ছে...</p>
+            </div>
         </div>
 
     </div>
@@ -451,18 +438,8 @@
     <div id="aboutModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAboutModal()">&times;</span>
-            <div class="modal-title">স্মার্ট ভূমি সেবা পোর্টালে আপনাকে স্বাগতম</div>
-            <div class="modal-body">
-                <p><strong>আমাদের লক্ষ্য:</strong> সাধারণ মানুষকে কোনো প্রকার ভোগান্তি ছাড়া সরকারি ও ডিজিটাল ভূমি সংক্রান্ত সকল সেবা দ্রুত ও সহজভাবে পৌঁছে দেওয়া।</p>
-                <br>
-                <p><strong>কেন আমরা শতভাগ অথেন্টিক?</strong></p>
-                <ul style="margin-left: 20px; margin-top: 5px;">
-                    <li>আমরা সরাসরি সরকারি অনুমোদিত অনলাইন পোর্টাল হতে তথ্য সংগ্রহ ও আবেদন সম্পন্ন করি।</li>
-                    <li>৫,০০০+ এর বেশি সফল সেবা প্রদানের বিশ্বস্ত অভিজ্ঞতা।</li>
-                    <li>আমাদের গ্রাহকদের লাইভ রিভিউ এবং রেটিং সরাসরি আমাদের প্ল্যাটফর্মে সংরক্ষিত হয়।</li>
-                    <li>যেকোনো সেবার জন্য ২৪/৭ সরাসরি হোয়াটসঅ্যাপ সহায়তা প্রদান করা হয়।</li>
-                </ul>
-            </div>
+            <h3 style="color: var(--gov-green); margin-bottom: 10px;">স্মার্ট ভূমি সেবা পোর্টালে আপনাকে স্বাগতম</h3>
+            <p style="font-size: 14px; color: #444;"><strong>আমাদের লক্ষ্য:</strong> সাধারণ মানুষকে কোনো প্রকার ভোগান্তি ছাড়া সরকারি ও ডিজিটাল ভূমি সংক্রান্ত সকল সেবা দ্রুত ও সহজভাবে পৌঁছে দেওয়া।</p>
         </div>
     </div>
 
@@ -474,7 +451,7 @@
         <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
-    <!-- Service Selection, WhatsApp & About Modal Script -->
+    <!-- Service Selection JS -->
     <script>
         var selectedServices = [];
 
@@ -508,38 +485,51 @@
             window.location.href = url;
         }
 
-        /* Modal JS */
-        function openAboutModal() {
-            document.getElementById('aboutModal').style.display = 'flex';
-        }
-
-        function closeAboutModal() {
-            document.getElementById('aboutModal').style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            var modal = document.getElementById('aboutModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
+        function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
     </script>
 
-    <!-- Instant Review System (No External Database Dependency) -->
+    <!-- Global API Review System -->
     <script>
+        const BIN_ID = "66d93e1ae41b4d34e42a9b34"; 
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const API_KEY = "$2a$10$wKkS3u2T9c094p60243.f.vE62HjLg5/589dOa6O8u.o8tO1m45mK";
+
         const reviewForm = document.getElementById('reviewForm');
+        const submitBtn = document.getElementById('submitBtn');
         const reviewsList = document.getElementById('reviewsList');
 
-        // Default Sample Reviews for First Time Users
-        const defaultReviews = [
-            { name: "মোহাম্মদ রফিক", rating: 5, comment: "খুব দ্রুত অনলাইন খতিয়ান হাতে পেয়েছি। ধন্যবাদ অসাধারণ সেবার জন্য!", date: "০৪/০৯/২০২৬" },
-            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের কাজটা ১ ঘণ্টার মধ্যেই কমপ্লিট করে দিয়েছে।", date: "০৩/০৯/২০২৬" }
-        ];
+        let allReviews = [];
 
-        // Fetch Local Reviews
-        function getReviews() {
-            const saved = localStorage.getItem('smart_land_reviews');
-            if (saved) {
-                return JSON.parse(saved);
-            } else {
-                localStorage.setItem('smart_land_reviews', JSON.str   
+        function loadGlobalReviews() {
+            fetch(`${API_URL}/latest`, {
+                headers: { "X-Access-Key": API_KEY }
+            })
+            .then(res => res.json())
+            .then(data => {
+                allReviews = data.record.reviews || [];
+                renderReviews(allReviews);
+            })
+            .catch(() => {
+                reviewsList.innerHTML = '<p style="color: #888; text-align: center;">প্রথম রিভিউটি দেওয়ার জন্য নিচের ফর্মটি পূরণ করুন!</p>';
+            });
+        }
+
+        function renderReviews(reviews) {
+            reviewsList.innerHTML = '';
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p style="color: #888; text-align: center;">এখনও কোনো রিভিউ নেই। প্রথম রিভিউটি আপনি দিন!</p>';
+                return;
+            }
+
+            reviews.forEach(review => {
+                const stars = '⭐'.repeat(review.rating);
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'live-review-card';
+                reviewCard.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <strong style="color: #333; font-size: 14px;">${escapeHTML(review.name)}</strong>
+                        <span style="font-size: 11px; color: #888;">${review.date}</span>
+                    </div>
+                    <div style="margin: 3px 0;">${stars}</div>
+   
