@@ -33,7 +33,6 @@
             line-height: 1.5;
         }
 
-        /* হেডার ব্যাকগ্রাউন্ড ওভারলে হালকা করে ছবি স্পষ্ট করা হয়েছে */
         header { 
             background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), 
                         url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
@@ -66,7 +65,8 @@
             text-align: center;
         }
         .stat-card {
-            flex: 1 1 45%;
+            flex: 1 1 30%;
+            min-width: 140px;
             background: #fff;
             padding: 10px;
             border-radius: 8px;
@@ -270,6 +270,10 @@
                 <div class="stat-number">২৪/৭</div>
                 <div class="stat-label">অনলাইন সহায়তা</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-number" id="visitorCount">লোড হচ্ছে...</div>
+                <div class="stat-label">মোট ভিজিটর</div>
+            </div>
         </div>
 
         <div class="instruction-box">
@@ -408,7 +412,7 @@
         <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
-    <!-- Service Selection JS -->
+    <!-- JavaScript Engine -->
     <script>
         var selectedServices = [];
 
@@ -441,13 +445,11 @@
             var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(text);
             window.location.href = url;
         }
-    </script>
 
-    <!-- JS for Directly Submitting to Google Form without IFrame blocking -->
-    <script>
         const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSem6w36UTMHSR97ktIT1x7q-sp1qvzU0eF88Xq7AYkGsaVm2A/formResponse";
         const sheetId = '1Xqc1P7D8E_SyPYPYxO7OXpEmQg131TRgyS65MpoZgvI';
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+        
+        const csvSheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
 
         const reviewForm = document.getElementById('reviewForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -463,23 +465,21 @@
             const rating = document.getElementById('reviewerRating').value;
             const comment = document.getElementById('reviewerComment').value;
 
-            // FormData তৈরি
             const formData = new FormData();
             formData.append('entry.400078048', name);
             formData.append('entry.1039370306', rating);
             formData.append('entry.402049984', comment);
 
-            // Fetch API দিয়ে জমা করা
             fetch(formUrl, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: formData
             }).then(() => {
-                alert("ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা ও প্রকাশ করা হয়েছে।");
+                alert("ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা দেওয়া হয়েছে।");
                 reviewForm.reset();
                 submitBtn.disabled = false;
                 submitBtn.innerText = "রিভিউ জমা দিন";
-                setTimeout(fetchReviews, 2000); // শিট আপডেট হওয়ার পর ডাটা রিলোড
+                setTimeout(fetchReviews, 2500);
             }).catch(error => {
                 console.error("Error submitting form:", error);
                 alert("রিভিউ জমা দিতে সমস্যা হয়েছে, অনুগ্রহ করে আবার চেষ্টা করুন।");
@@ -488,14 +488,12 @@
             });
         });
 
+        // Updated CSV Parsing Logic according to exact Google Sheet column positions
         function fetchReviews() {
-            fetch(sheetUrl)
+            fetch(csvSheetUrl)
                 .then(response => response.text())
-                .then(data => {
-                    const jsonString = data.substring(47, data.length - 2);
-                    const json = JSON.parse(jsonString);
-                    const rows = json.table.rows;
-
+                .then(csvText => {
+                    const rows = parseCSV(csvText);
                     reviewsList.innerHTML = '';
 
                     if (!rows || rows.length === 0) {
@@ -503,20 +501,27 @@
                         return;
                     }
 
+                    // Loop through rows dynamically
                     for (let i = rows.length - 1; i >= 0; i--) {
-                        const cells = rows[i].c;
-                        if (!cells) continue;
+                        const row = rows[i];
+                        if (!row || row.length < 2) continue;
 
-                        const dateVal = cells[0] ? (cells[0].f || cells[0].v) : '';
-                        const ratingVal = cells[1] ? cells[1].v : '5';
-                        const commentVal = cells[2] ? cells[2].v : '';
-                        const nameVal = cells[3] ? cells[3].v : 'বেনামী';
+                        let ratingVal = '5';
+                        let commentVal = '';
+                        let nameVal = 'গ্রাহক';
 
-                        const starCount = parseInt(ratingVal) || 5;
-                        const stars = '⭐'.repeat(starCount);
+                        // Detecting columns flexible to index
+                        if (row.length === 3) {
+                            ratingVal = row[0];
+                            commentVal = row[1];
+                            nameVal = row[2];
+                        } else if (row.length >= 4) {
+                            ratingVal = row[1];
+                            commentVal = row[2];
+                            nameVal = row[3];
+                        }
 
-                        const card = document.createElement('div');
-                        card.className = 'live-review-card';
-                        card.innerHTML = `
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                   
+                        // Skip Header Row if present
+                        if (isNaN(parseInt(ratingVal))) continue;
+
+                        cons
