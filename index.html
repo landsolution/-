@@ -18,7 +18,6 @@
             --light-bg: #f4f7f6;
             --text-dark: #222222;
             --shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.2s ease-in-out;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +36,6 @@
             padding: 45px 15px 35px 15px; 
             text-align: center; 
             border-bottom: 5px solid var(--gov-red); 
-            position: relative;
         }
         header h1 { font-size: 32px; font-weight: bold; margin-bottom: 6px; text-shadow: 2px 2px 5px rgba(0,0,0,0.8); }
         header p { font-size: 16px; opacity: 0.98; margin-bottom: 12px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
@@ -90,50 +88,30 @@
             justify-content: space-between;
         }
 
+        /* কার্ড সিলেক্ট সিএসএস (ডিফল্ট HTML Checkbox ব্যবহার করা হয়েছে) */
         .service-card { 
             width: calc(50% - 5px);
             box-sizing: border-box;
             background: #fff; 
-            padding: 10px 8px; 
+            padding: 12px 10px; 
             border-radius: 8px; 
             box-shadow: var(--shadow); 
-            transition: var(--transition); 
             border: 2px solid #dcdcdc; 
             display: flex; 
             align-items: center; 
             cursor: pointer; 
-            user-select: none;
-        }
-        
-        .service-card.selected { 
-            border-color: var(--gov-green) !important; 
-            background-color: #e8f5e9 !important; 
         }
 
-        .custom-checkbox { 
-            width: 20px; 
-            height: 20px; 
-            border: 2px solid var(--gov-green); 
-            border-radius: 4px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #fff; 
-            margin-right: 8px;
-            flex-shrink: 0; 
-            font-weight: bold;
-            color: #fff;
-            font-size: 14px;
-        }
-        
-        .service-card.selected .custom-checkbox { 
-            background: var(--gov-green); 
-        }
-        .service-card.selected .custom-checkbox::after { 
-            content: '✓'; 
+        .service-checkbox {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: var(--gov-green);
+            flex-shrink: 0;
         }
 
-        .card-info { display: flex; flex-direction: column; pointer-events: none; }
+        .card-info { display: flex; flex-direction: column; }
         .card-title { font-size: 13px; font-weight: bold; color: #1a2530; line-height: 1.2; }
         .card-price { font-size: 12px; font-weight: bold; color: var(--gov-green); margin-top: 2px; }
 
@@ -225,6 +203,7 @@
             cursor: pointer; 
             border: none; 
             font-size: 26px;
+            text-decoration: none;
         }
 
         footer { background: #1e2b37; color: #fff; text-align: center; padding: 18px 10px; font-size: 13px; }
@@ -257,105 +236,105 @@
                 <div class="stat-label">অনলাইন সহায়তা</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="visitorCount">১,৫০০+</div>
+                <div class="stat-number">১,৫০০+</div>
                 <div class="stat-label">মোট ভিজিটর</div>
             </div>
         </div>
 
         <div class="instruction-box">
-            👉 যে সেবাগুলো নিতে চান সেগুলোর উপর ক্লিক করে টিক মার্ক দিন, তারপর নিচে বা ডানপাশের হোয়াটসঅ্যাপ বাটনে ক্লিক করুন।
+            👉 যে সেবাগুলো নিতে চান সেগুলোর পাশের ঘরে টিক চিহ্ন দিন, তারপর নিচে বা ডানপাশের হোয়াটসঅ্যাপ বাটনে ক্লিক করুন।
         </div>
 
         <h2 class="section-heading">আমাদের ডিজিটাল সেবাসমূহ</h2>
 
         <div class="service-grid">
-            <div class="service-card" onclick="toggleService(this, '১. খারিজের আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="১. খারিজের আবেদন (৳ ৫০০)">
                 <div class="card-info">
-                    <div class="card-title">১. খারিজের আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
+                    <span class="card-title">১. খারিজের আবেদন</span>
+                    <span class="card-price">৳ ৫০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '২. অনলাইন খতিয়ান তোলা (৳ ১৭০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="২. অনলাইন খতিয়ান তোলা (৳ ১৭০)">
                 <div class="card-info">
-                    <div class="card-title">২. অনলাইন খতিয়ান তোলা</div>
-                    <div class="card-price">৳ ১৭০</div>
+                    <span class="card-title">২. অনলাইন খতিয়ান তোলা</span>
+                    <span class="card-price">৳ ১৭০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৩. খাজনার আবেদন (৳ ১০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৩. খাজনার আবেদন (৳ ১০০)">
                 <div class="card-info">
-                    <div class="card-title">৩. খাজনার আবেদন</div>
-                    <div class="card-price">৳ ১০০</div>
+                    <span class="card-title">৩. খাজনার আবেদন</span>
+                    <span class="card-price">৳ ১০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৪. ম্যাপ আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৪. ম্যাপ আবেদন (৳ ৫০০)">
                 <div class="card-info">
-                    <div class="card-title">৪. ম্যাপ আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
+                    <span class="card-title">৪. ম্যাপ আবেদন</span>
+                    <span class="card-price">৳ ৫০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৫. নামজারি খতিয়ানের সার্টিফাইড কপি (৳ ৩,৫০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৫. নামজারি খতিয়ানের সার্টিফাইড কপি (৳ ৩,৫০০)">
                 <div class="card-info">
-                    <div class="card-title">৫. নামজারি সার্টিফাইড কপি</div>
-                    <div class="card-price">৳ ৩,৫০০</div>
+                    <span class="card-title">৫. নামজারি সার্টিফাইড কপি</span>
+                    <span class="card-price">৳ ৩,৫০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৬. মিসকেস আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৬. মিসকেস আবেদন (৳ ৫০০)">
                 <div class="card-info">
-                    <div class="card-title">৬. মিসকেস আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
+                    <span class="card-title">৬. মিসকেস আবেদন</span>
+                    <span class="card-price">৳ ৫০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৭. ম্যাপ পেন্টাগ্রাফ (৳ ৭০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৭. ম্যাপ পেন্টাগ্রাফ (৳ ৭০০)">
                 <div class="card-info">
-                    <div class="card-title">৭. ম্যাপ পেন্টাগ্রাফ</div>
-                    <div class="card-price">৳ ৭০০</div>
+                    <span class="card-title">৭. ম্যাপ পেন্টাগ্রাফ</span>
+                    <span class="card-price">৳ ৭০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৮. প্লট বা দাগ পরিমাপ বের করা (৳ ৩০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৮. প্লট বা দাগ পরিমাপ বের করা (৳ ৩০০)">
                 <div class="card-info">
-                    <div class="card-title">৮. প্লট পরিমাপ বের করা</div>
-                    <div class="card-price">৳ ৩০০</div>
+                    <span class="card-title">৮. প্লট পরিমাপ বের করা</span>
+                    <span class="card-price">৳ ৩০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য বের করা (৳ ১০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য বের করা (৳ ১০০)">
                 <div class="card-info">
-                    <div class="card-title">৯. জমির তথ্য বের করা</div>
-                    <div class="card-price">৳ ১০০</div>
+                    <span class="card-title">৯. জমির তথ্য বের করা</span>
+                    <span class="card-price">৳ ১০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '১০. খতিয়ান বিশ্লেষণ (৳ ৩০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="১০. খতিয়ান বিশ্লেষণ (৳ ৩০০)">
                 <div class="card-info">
-                    <div class="card-title">১০. খতিয়ান বিশ্লেষণ</div>
-                    <div class="card-price">৳ ৩০০</div>
+                    <span class="card-title">১০. খতিয়ান বিশ্লেষণ</span>
+                    <span class="card-price">৳ ৩০০</span>
                 </div>
-            </div>
+            </label>
 
-            <div class="service-card" onclick="toggleService(this, '১১. আইনি পরামর্শ (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="১১. আইনি পরামর্শ (৳ ৫০০)">
                 <div class="card-info">
-                    <div class="card-title">১১. আইনি পরামর্শ</div>
-                    <div class="card-price">৳ ৫০০</div>
+                    <span class="card-title">১১. আইনি পরামর্শ</span>
+                    <span class="card-price">৳ ৫০০</span>
                 </div>
-            </div>
+            </label>
         </div>
 
         <div class="contact-panel">
@@ -390,39 +369,26 @@
 
     </div>
 
-    <button onclick="sendToWhatsApp()" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
+    <!-- হোয়াটসঅ্যাপ ফ্লোটিং বাটন (সরাসরি লিংক) -->
+    <a href="https://wa.me/8801335556732?text=আসসালামু%20আলাইকুম%2C%20আমি%20ভূমি%20সেবা%20সম্পর্কে%20জানতে%20চাই।" target="_blank" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
         💬
-    </button>
+    </a>
 
     <footer>
         <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
     <script>
-        var selectedServices = [];
-
-        // ১. সার্ভিস সিলেক্ট (টিক চিহ্ন)
-        function toggleService(element, serviceName) {
-            if (element.classList.contains('selected')) {
-                element.classList.remove('selected');
-                selectedServices = selectedServices.filter(function(item) {
-                    return item !== serviceName;
-                });
-            } else {
-                element.classList.add('selected');
-                selectedServices.push(serviceName);
-            }
-        }
-
-        // ২. হোয়াটসঅ্যাপ মেসেজ পাঠানো
+        // হোয়াটসঅ্যাপে সরাসরি তথ্য পাঠানো
         function sendToWhatsApp() {
+            var checkboxes = document.querySelectorAll('.service-checkbox:checked');
             var phoneNumber = "8801335556732";
             var text = "আসসালামু আলাইকুম, আমি আপনার ডিজিটাল ভূমি সেবা ওয়েবসাইট থেকে যোগাযোগ করছি।";
             
-            if (selectedServices.length > 0) {
+            if (checkboxes.length > 0) {
                 text += "\n\nআমি নিচের সেবাগুলো নিতে আগ্রহী:\n";
-                for (var i = 0; i < selectedServices.length; i++) {
-                    text += (i + 1) + ". " + selectedServices[i] + "\n";
+                for (var i = 0; i < checkboxes.length; i++) {
+                    text += (i + 1) + ". " + checkboxes[i].value + "\n";
                 }
                 text += "\nঅনুগ্রহ করে এ বিষয়ে তথ্য দিয়ে সাহায্য করুন।";
             } else {
@@ -433,24 +399,7 @@
             window.open(url, '_blank');
         }
 
-        // ৩. নিরাপদ ভিজিটর কাউন্টার (যেটি কোনো কিছু ব্লক করবে না)
-        function loadVisitorCount() {
-            fetch('https://api.counterapi.dev/v1/smartlandservice-bd/visits/up')
-                .then(function(res) { return res.json(); })
-                .then(function(data) {
-                    if (data && data.count) {
-                        var bnNumbers = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
-                        var countStr = data.count.toString().replace(/\d/g, function(d) { return bnNumbers[d]; });
-                        document.getElementById('visitorCount').innerText = countStr + ' জন';
-                    }
-                })
-                .catch(function(err) {
-                    // নেটওয়ার্কে সমস্যা থাকলে এটি সাধারণ ১,৫০০+ দেখাবে
-                    document.getElementById('visitorCount').innerText = '১,৫০০+';
-                });
-        }
-
-        // ৪. রিভিউ জমা দেওয়া
+        // গুগল ফর্ম রিভিউ সাবমিট
         function submitReview(e) {
             e.preventDefault();
             var submitBtn = document.getElementById('submitBtn');
@@ -484,7 +433,7 @@
             });
         }
 
-        // ৫. গুগল শিট থেকে রিভিউ লোড
+        // গুগল শিট থেকে রিভিউ দেখা
         function fetchReviews() {
             var sheetId = '1Xqc1P7D8E_SyPYPYxO7OXpEmQg131TRgyS65MpoZgvI';
             var csvSheetUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/export?format=csv';
@@ -512,4 +461,46 @@
                         if (row.length === 3) {
                             ratingVal = row[0]; commentVal = row[1]; nameVal = row[2];
                         } else if (row.length >= 4) {
-                        
+                            ratingVal = row[1]; commentVal = row[2]; nameVal = row[3];
+                        }
+
+                        var starCount = parseInt(ratingVal) || 5;
+                        var stars = '⭐'.repeat(starCount);
+
+                        var card = document.createElement('div');
+                        card.className = 'live-review-card';
+                        card.innerHTML = 
+                            '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                                '<strong style="color: #333; font-size: 14px;">' + escapeHTML(nameVal) + '</strong>' +
+                            '</div>' +
+                            '<div style="margin: 3px 0;">' + stars + '</div>' +
+                            '<p style="margin: 0; color: #555; font-size: 13px;">' + escapeHTML(commentVal) + '</p>';
+                        reviewsList.appendChild(card);
+                    }
+                })
+                .catch(function(err) {
+                    reviewsList.innerHTML = '<p style="text-align:center; color:#888;">রিভিউ লোড করা যাচ্ছে না।</p>';
+                });
+        }
+
+        function parseCSV(text) {
+            var p = '', c = '', r = [];
+            var q = false;
+            var row = [''];
+            for (var i = 0; i < text.length; i++) {
+                c = text[i];
+                var next = text[i+1];
+                if (c === '"') {
+                    if (q && next === '"') { row[row.length - 1] += '"'; i++; }
+                    else { q = !q; }
+                } else if (c === ',' && !q) {
+                    row.push('');
+                } else if ((c === '\r' || c === '\n') && !q) {
+                    if (c === '\r' && next === '\n') { i++; }
+                    r.push(row);
+                    row = [''];
+                } else {
+                    row[row.length - 1] += c;
+                }
+            }
+            if (row.lengt
