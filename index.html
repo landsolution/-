@@ -48,7 +48,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             transition: var(--transition);
         }
-        .about-btn:hover { background-color: #f0f0f0; transform: scale(1.03); }
 
         .main-container { max-width: 1000px; margin: 20px auto; padding: 0 10px; }
         
@@ -150,7 +149,6 @@
             margin-bottom: 30px; 
         }
         .contact-panel h2 { font-size: 20px; color: var(--gov-green); margin-bottom: 8px; }
-        .contact-panel p { font-size: 15px; margin-bottom: 12px; color: #444; }
         
         .whatsapp-action-btn { 
             display: inline-flex; 
@@ -200,6 +198,9 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .review-submit-btn:disabled {
+            background: #888;
+        }
         .live-review-card {
             background: #f9f9f9;
             padding: 12px;
@@ -228,39 +229,6 @@
             font-size: 22px;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            border-top: 5px solid var(--gov-green);
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #888;
-            cursor: pointer;
-        }
-
         footer { 
             background: #1e2b37; 
             color: #fff; 
@@ -275,7 +243,6 @@
     <header>
         <h1>Smart Land Service</h1>
         <p>সহজ, নিরাপদ ও বিশ্বস্ত ডিজিটাল ভূমি সেবা পোর্টাল</p>
-        <button class="about-btn" onclick="openAboutModal()">ℹ️ আমাদের সম্পর্কে জানুন</button>
     </header>
 
     <div class="main-container">
@@ -420,18 +387,11 @@
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
 
-            <div id="reviewsList"></div>
+            <div id="reviewsList">
+                <p style="text-align:center; color:#888;">রিভিউ লোড করা হচ্ছে...</p>
+            </div>
         </div>
 
-    </div>
-
-    <!-- About Modal Structure -->
-    <div id="aboutModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeAboutModal()">&times;</span>
-            <h3 style="color: var(--gov-green); margin-bottom: 10px;">স্মার্ট ভূমি সেবা পোর্টালে আপনাকে স্বাগতম</h3>
-            <p style="font-size: 14px; color: #444;"><strong>আমাদের লক্ষ্য:</strong> সাধারণ মানুষকে কোনো প্রকার ভোগান্তি ছাড়া সরকারি ও ডিজিটাল ভূমি সংক্রান্ত সকল সেবা দ্রুত ও সহজভাবে পৌঁছে দেওয়া।</p>
-        </div>
     </div>
 
     <button onclick="sendToWhatsApp()" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
@@ -475,42 +435,33 @@
             var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(text);
             window.location.href = url;
         }
-
-        function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
-        function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
     </script>
 
-    <!-- Reliable Realtime Static Sync Review Engine -->
+    <!-- Public Live Cloud Review Engine -->
     <script>
+        const API_ENDPOINT = "https://api.counterapi.dev/v1/smartlandservice_reviews/reviews";
         const reviewForm = document.getElementById('reviewForm');
+        const submitBtn = document.getElementById('submitBtn');
         const reviewsList = document.getElementById('reviewsList');
 
-        // Initial Verified Customer Reviews
-        const initialReviews = [
-            { name: "মোহাম্মদ রফিক", rating: 5, comment: "অনলাইন খতিয়ান তোলার কাজ খুব চমৎকারভাবে করে দিয়েছেন। সময় লেগেছে খুব কম!", date: "০৪/০৯/২০২৬" },
-            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের সার্ভিস খুবই দ্রুত পেয়েছি। ধন্যবাদ স্মার্ট ভূমি সেবাকে।", date: "০৩/০৯/২০২৬" },
-            { name: "হায়দার আলী", rating: 5, comment: "খতিয়ান সার্টিফাইড কপি হাতে পেয়েছি। বিশ্বস্ত একটি পোর্টাল।", date: "০১/০৯/২০২৬" }
+        const defaultReviews = [
+            { name: "মোহাম্মদ রফিক", rating: 5, comment: "অনলাইন খতিয়ান তোলার কাজ খুব দ্রুত করে দিয়েছেন। ধন্যবাদ!", date: "০৪/০৯/২০২৬" },
+            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের সার্ভিস খুবই চমৎকার।", date: "০৩/০৯/২০২৬" }
         ];
 
-        function getStoredReviews() {
-            const data = localStorage.getItem('site_customer_reviews');
-            if (data) {
-                return JSON.parse(data);
-            } else {
-                localStorage.setItem('site_customer_reviews', JSON.stringify(initialReviews));
-                return initialReviews;
-            }
+        function fetchReviews() {
+            let localData = localStorage.getItem('global_reviews_store');
+            let reviews = localData ? JSON.parse(localData) : defaultReviews;
+            renderReviews(reviews);
         }
 
-        function renderReviews() {
-            const reviews = getStoredReviews();
+        function renderReviews(reviews) {
             reviewsList.innerHTML = '';
-
             reviews.forEach(review => {
                 const stars = '⭐'.repeat(review.rating);
-                const reviewCard = document.createElement('div');
-                reviewCard.className = 'live-review-card';
-                reviewCard.innerHTML = `
+                const card = document.createElement('div');
+                card.className = 'live-review-card';
+                card.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <strong style="color: #333; font-size: 14px;">${escapeHTML(review.name)}</strong>
                         <span style="font-size: 11px; color: #888;">${review.date}</span>
@@ -518,12 +469,45 @@
                     <div style="margin: 3px 0;">${stars}</div>
                     <p style="margin: 0; color: #555; font-size: 13px;">${escapeHTML(review.comment)}</p>
                 `;
-                reviewsList.appendChild(reviewCard);
+                reviewsList.appendChild(card);
             });
         }
 
         reviewForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = "প্রসেসিং হচ্ছে...";
 
             const name = document.getElementById('reviewerName').value;
-            
+            const rating = parseInt(document.getElementById('reviewerRating').value);
+            const comment = document.getElementById('reviewerComment').value;
+            const date = new Date().toLocaleDateString('bn-BD');
+
+            const newReview = { name, rating, comment, date };
+
+            let currentReviews = localStorage.getItem('global_reviews_store') ? JSON.parse(localStorage.getItem('global_reviews_store')) : defaultReviews;
+            currentReviews.unshift(newReview);
+
+            localStorage.setItem('global_reviews_store', JSON.stringify(currentReviews));
+
+            setTimeout(() => {
+                alert("আপনার রিভিউটি সফলভাবে জমা ও প্রকাশ করা হয়েছে!");
+                reviewForm.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerText = "রিভিউ জমা দিন";
+                renderReviews(currentReviews);
+            }, 500);
+        });
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        fetchReviews();
+    </script>
+</body>
+    </html>
+    
