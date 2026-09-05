@@ -1,506 +1,241 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Land Service Bangladesh | স্মার্ট ভূমি সেবা</title>
-    
-    <!-- Google Search Console Verification Meta Tag -->
-    <meta name="google-site-verification" content="jf3EpEU8UYSwBeFNPhLJWynxpaK50rmjDuHhj9p6Z5g" />
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="স্মার্ট ভূমি সেবা বাংলাদেশ - অনলাইনে খতিয়ান, খারিজ, খাজনা ও ভূমি সংক্রান্ত সকল ডিজিটাল সেবা পান সহজেই।">
-    <meta name="keywords" content="স্মার্ট ভূমি সেবা, জমি খারিজ, অনলাইন খতিয়ান, ভূমি সেবা বাংলাদেশ, land service bd">
-    <meta name="author" content="Smart Land Service">
-
-    <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
-    <style>
-        :root {
-            --gov-green: #006a4e;
-            --gov-red: #da291c;
-            --light-bg: #f4f7f6;
-            --text-dark: #222222;
-            --shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.2s ease-in-out;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            font-family: 'SolaimanLipi', Arial, sans-serif; 
-            background-color: var(--light-bg); 
-            color: var(--text-dark); 
-            line-height: 1.5;
-        }
-
-        header { 
-            background: linear-gradient(rgba(0, 70, 50, 0.85), rgba(0, 70, 50, 0.85)), 
-                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-            color: #fff; 
-            padding: 35px 15px 25px 15px; 
-            text-align: center; 
-            border-bottom: 5px solid var(--gov-red); 
-            position: relative;
-        }
-        header h1 { font-size: 30px; font-weight: bold; margin-bottom: 6px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-        header p { font-size: 16px; opacity: 0.95; margin-bottom: 12px; }
-
-        .main-container { max-width: 1000px; margin: 20px auto; padding: 0 10px; }
-        
-        .stats-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .stat-card {
-            flex: 1 1 45%;
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            border-bottom: 3px solid var(--gov-green);
-        }
-        .stat-number { font-size: 20px; font-weight: bold; color: var(--gov-green); }
-        .stat-label { font-size: 13px; color: #555; }
-
-        .instruction-box { 
-            background: #e8f5e9; 
-            border-left: 5px solid var(--gov-green); 
-            padding: 12px 15px; 
-            margin-bottom: 20px; 
-            border-radius: 4px; 
-            font-size: 15px;
-            font-weight: bold; 
-            color: #1b5e20; 
-        }
-        
-        .section-heading {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--gov-green);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .service-grid { 
-            display: flex !important;
-            flex-wrap: wrap !important;
-            gap: 10px !important; 
-            margin-bottom: 30px !important; 
-            justify-content: space-between;
-        }
-
-        .service-card { 
-            width: calc(50% - 5px) !important;
-            box-sizing: border-box !important;
-            background: #fff; 
-            padding: 10px 8px; 
-            border-radius: 8px; 
-            box-shadow: var(--shadow); 
-            transition: var(--transition); 
-            border: 2px solid #dcdcdc; 
-            display: flex; 
-            align-items: center; 
-            cursor: pointer; 
-            user-select: none;
-        }
-        
-        .service-card.selected { 
-            border-color: var(--gov-green) !important; 
-            background-color: #e8f5e9 !important; 
-        }
-
-        .custom-checkbox { 
-            width: 18px; 
-            height: 18px; 
-            border: 2px solid var(--gov-green); 
-            border-radius: 4px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #fff; 
-            margin-right: 6px;
-            flex-shrink: 0; 
-            font-weight: bold;
-            color: #fff;
-            font-size: 12px;
-        }
-        
-        .service-card.selected .custom-checkbox { background: var(--gov-green); }
-        .service-card.selected .custom-checkbox::after { content: '✓'; }
-
-        .card-info { display: flex; flex-direction: column; pointer-events: none; }
-        .card-title { font-size: 13px; font-weight: bold; color: #1a2530; line-height: 1.2; }
-        .card-price { font-size: 12px; font-weight: bold; color: var(--gov-green); margin-top: 2px; }
-
-        .contact-panel { 
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: var(--shadow); 
-            text-align: center; 
-            border-left: 5px solid var(--gov-red); 
-            margin-bottom: 30px; 
-        }
-        .contact-panel h2 { font-size: 20px; color: var(--gov-green); margin-bottom: 8px; }
-        
-        .whatsapp-action-btn { 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            gap: 8px; 
-            background-color: #25d366; 
-            color: #fff; 
-            padding: 10px 20px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); 
-            cursor: pointer; 
-            border: none; 
-        }
-
-        .review-box {
-            background: #fff;
-            padding: 18px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            border-top: 4px solid var(--gov-green);
-        }
-        .review-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .review-form input, .review-form select, .review-form textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        .review-submit-btn {
-            background: var(--gov-green);
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .review-submit-btn:disabled { background: #888; }
-        .live-review-card {
-            background: #f9f9f9;
-            padding: 12px;
-            border-left: 4px solid var(--gov-green);
-            border-radius: 4px;
-            margin-bottom: 10px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-        }
-
-        .whatsapp-float { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
-            background-color: #25d366; 
-            color: #fff; 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 50%; 
-            box-shadow: 2px 4px 12px rgba(0,0,0,0.25); 
-            z-index: 999; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            border: none; 
-            font-size: 22px;
-        }
-
-        footer { 
-            background: #1e2b37; 
-            color: #fff; 
-            text-align: center; 
-            padding: 18px 10px; 
-            font-size: 13px; 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ভূমি সেবা - গ্রাহক মতামত ও রিভিউ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 650px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      border-color: #27ae60;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #219150;
+    }
+    .reviews-section {
+      margin-top: 40px;
+      border-top: 2px solid #eee;
+      padding-top: 20px;
+    }
+    .reviews-section h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .review-card {
+      background: #f9f9f9;
+      border-left: 4px solid #27ae60;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+    .rating-stars {
+      color: #f39c12;
+      letter-spacing: 2px;
+    }
+    .review-comment {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    #loading {
+      text-align: center;
+      color: #777;
+      font-style: italic;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Smart Land Service</h1>
-        <p>সহজ, নিরাপদ ও বিশ্বস্ত ডিজিটাল ভূমি সেবা পোর্টাল</p>
-    </header>
-
-    <div class="main-container">
-        
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number">৫,০০০+</div>
-                <div class="stat-label">সফলভাবে প্রদত্ত সেবা</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">১০০%</div>
-                <div class="stat-label">সঠিক ও নির্ভুল তথ্য</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">৪.৯ ★</div>
-                <div class="stat-label">গ্রাহক সন্তুষ্টি রেটিং</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">২৪/৭</div>
-                <div class="stat-label">অনলাইন সহায়তা</div>
-            </div>
-        </div>
-
-        <div class="instruction-box">
-            👉 যে সেবাগুলো নিতে চান সেগুলোর উপর ক্লিক করে টিক মার্ক দিন, তারপর নিচে বা ডানপাশের হোয়াটসঅ্যাপ বাটনে ক্লিক করুন।
-        </div>
-
-        <h2 class="section-heading">আমাদের ডিজিটাল সেবাসমূহ</h2>
-
-        <div class="service-grid">
-            <div class="service-card" onclick="toggleService(this, '১. খারিজের আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">১. খারিজের আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '২. অনলাইন খতিয়ান তোলা (৳ ১৭০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">২. অনলাইন খতিয়ান তোলা</div>
-                    <div class="card-price">৳ ১৭০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৩. খাজনার আবেদন (৳ ১০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৩. খাজনার আবেদন</div>
-                    <div class="card-price">৳ ১০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৪. ম্যাপ আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৪. ম্যাপ আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৫. নামজারি খতিয়ানের সার্টিফাইড কপি (৳ ৩,৫০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৫. নামজারি সার্টিফাইড কপি</div>
-                    <div class="card-price">৳ ৩,৫০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৬. মিসকেস আবেদন (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৬. মিসকেস আবেদন</div>
-                    <div class="card-price">৳ ৫০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৭. ম্যাপ পেন্টাগ্রাফ (৳ ৭০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৭. ম্যাপ পেন্টাগ্রাফ</div>
-                    <div class="card-price">৳ ৭০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৮. প্লট বা দাগ পরিমাপ বের করা (৳ ৩০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৮. প্লট পরিমাপ বের করা</div>
-                    <div class="card-price">৳ ৩০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য বের করা (৳ ১০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">৯. জমির তথ্য বের করা</div>
-                    <div class="card-price">৳ ১০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '১০. খতিয়ান বিশ্লেষণ (৳ ৩০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">১০. খতিয়ান বিশ্লেষণ</div>
-                    <div class="card-price">৳ ৩০০</div>
-                </div>
-            </div>
-
-            <div class="service-card" onclick="toggleService(this, '১১. আইনি পরামর্শ (৳ ৫০০)')">
-                <div class="custom-checkbox"></div>
-                <div class="card-info">
-                    <div class="card-title">১১. আইনি পরামর্শ</div>
-                    <div class="card-price">৳ ৫০০</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-panel">
-            <h2>নির্বাচিত সেবা নিয়ে সরাসরি কথা বলুন</h2>
-            <p>উপরে আপনার পছন্দমতো সেবায় টিক চিহ্ন দিয়ে নিচের বাটনে ক্লিক করুন।</p>
-            <button onclick="sendToWhatsApp()" class="whatsapp-action-btn">
-                WhatsApp-এ অর্ডার পাঠান (01335556732)
-            </button>
-        </div>
-
-        <h2 class="section-heading">গ্রাহকদের মতামত ও রিভিউ</h2>
-        <div class="review-box">
-            <form id="reviewForm" class="review-form">
-                <input type="text" id="reviewerName" placeholder="আপনার নাম লিখুন..." required>
-                <select id="reviewerRating">
-                    <option value="5">⭐⭐⭐⭐⭐ (৫/৫ - চমৎকার)</option>
-                    <option value="4">⭐⭐⭐⭐ (৪/৫ - ভালো)</option>
-                    <option value="3">⭐⭐⭐ (৩/৫ - মাঝারি)</option>
-                    <option value="2">⭐⭐ (২/৫ - খারাপ)</option>
-                    <option value="1">⭐ (১/৫ - খুবই খারাপ)</option>
-                </select>
-                <textarea id="reviewerComment" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
-                <button type="submit" id="submitBtn" class="review-submit-btn">রিভিউ জমা দিন</button>
-            </form>
-
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-
-            <div id="reviewsList">
-                <p style="text-align:center; color:#888;">রিভিউ লোড করা হচ্ছে...</p>
-            </div>
-        </div>
-
+<div class="container">
+  <h2>আপনার মতামত বা রিভিউ দিন</h2>
+  
+  <!-- ব্যাকগ্রাউন্ডে গুগল ফর্ম জমা হওয়ার জন্য অদৃশ্য আইফ্রেম -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {onFormSubmitted();}"></iframe>
+  
+  <!-- গুগল ফর্ম সাবমিশন লিঙ্ক -->
+  <form action="https://docs.google.com/forms/d/e/1FAIpQLSem6w36UTMHSR97ktIT1x7q-sp1qvzU0eF88Xq7AYkGsaVm2A/formResponse" method="POST" target="hidden_iframe" id="reviewForm">
+    
+    <!-- নাম -->
+    <div class="form-group">
+      <label for="name">আপনার নাম:</label>
+      <input type="text" name="entry.400078048" id="name" placeholder="আপনার নাম লিখুন" required>
     </div>
+    
+    <!-- রেটিং -->
+    <div class="form-group">
+      <label for="rating">রেটিং (১-৫):</label>
+      <select name="entry.1039370306" id="rating" required>
+        <option value="5">⭐⭐⭐⭐⭐ (৫/৫ - চমৎকার)</option>
+        <option value="4">⭐⭐⭐⭐ (৪/৫ - ভালো)</option>
+        <option value="3">⭐⭐⭐ (৩/৫ - মাঝারি)</option>
+        <option value="2">⭐⭐ (২/৫ - খারাপ)</option>
+        <option value="1">⭐ (১/৫ - খুবই খারাপ)</option>
+      </select>
+    </div>
+    
+    <!-- মন্তব্য -->
+    <div class="form-group">
+      <label for="comment">মন্তব্য:</label>
+      <textarea name="entry.402049984" id="comment" rows="4" placeholder="আপনার অনুভূতি বা অভিজ্ঞতা সংক্ষেপে লিখুন..." required></textarea>
+    </div>
+    
+    <button type="submit">রিভিউ জমা দিন</button>
+  </form>
 
-    <button onclick="sendToWhatsApp()" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
-        💬
-    </button>
+  <!-- রিভিউ তালিকা -->
+  <div class="reviews-section">
+    <h3>গ্রাহকদের সাম্প্রতিক মতামত:</h3>
+    <div id="loading">রিভিউ লোড হচ্ছে...</div>
+    <div id="reviewsContainer"></div>
+  </div>
+</div>
 
-    <footer>
-        <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
-    </footer>
+<script>
+  let submitted = false;
+  
+  document.getElementById('reviewForm').addEventListener('submit', function() {
+    submitted = true;
+  });
 
-    <!-- Service Selection JS -->
-    <script>
-        var selectedServices = [];
+  function onFormSubmitted() {
+    alert('ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা হয়েছে।');
+    document.getElementById('reviewForm').reset();
+    submitted = false;
+    // গুগল শিট আপডেট হতে ২ সেকেন্ড সময় দিয়ে তথ্য রিফ্রেশ করা
+    setTimeout(fetchReviews, 2000);
+  }
 
-        function toggleService(element, serviceName) {
-            if (element.classList.contains('selected')) {
-                element.classList.remove('selected');
-                selectedServices = selectedServices.filter(function(item) {
-                    return item !== serviceName;
-                });
-            } else {
-                element.classList.add('selected');
-                selectedServices.push(serviceName);
-            }
-        }
+  // গুগল শিটের তথ্য সংগ্রহের লিঙ্ক
+  const sheetId = '1Xqc1P7D8E_SyPYPYxO7OXpEmQg131TRgyS65MpoZgvI';
+  const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
 
-        function sendToWhatsApp() {
-            var phoneNumber = "8801335556732";
-            var text = "আসসালামু আলাইকুম, আমি আপনার ডিজিটাল ভূমি সেবা ওয়েবসাইট থেকে যোগাযোগ করছি।";
-            
-            if (selectedServices.length > 0) {
-                text += "\n\nআমি নিচের সেবাগুলো নিতে আগ্রহী:\n";
-                for (var i = 0; i < selectedServices.length; i++) {
-                    text += (i + 1) + ". " + selectedServices[i] + "\n";
-                }
-                text += "\nঅনুগ্রহ করে এ বিষয়ে তথ্য দিয়ে সাহায্য করুন।";
-            } else {
-                text += " আমার ভূমি সেবা সম্পর্কে কিছু তথ্য প্রয়োজন।";
-            }
-
-            var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(text);
-            window.location.href = url;
-        }
-    </script>
-
-    <!-- Public Live Cloud Review Engine -->
-    <script>
-        const reviewForm = document.getElementById('reviewForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const reviewsList = document.getElementById('reviewsList');
-
-        const defaultReviews = [
-            { name: "মোহাম্মদ রফিক", rating: 5, comment: "অনলাইন খতিয়ান তোলার কাজ খুব দ্রুত করে দিয়েছেন। ধন্যবাদ!", date: "০৪/০৯/২০২৬" },
-            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের সার্ভিস খুবই চমৎকার।", date: "০৩/০৯/২০২৬" }
-        ];
-
-        function fetchReviews() {
-            let localData = localStorage.getItem('global_reviews_store');
-            let reviews = localData ? JSON.parse(localData) : defaultReviews;
-            renderReviews(reviews);
-        }
-
-        function renderReviews(reviews) {
-            reviewsList.innerHTML = '';
-            reviews.forEach(review => {
-                const stars = '⭐'.repeat(review.rating);
-                const card = document.createElement('div');
-                card.className = 'live-review-card';
-                card.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #333; font-size: 14px;">${escapeHTML(review.name)}</strong>
-                        <span style="font-size: 11px; color: #888;">${review.date}</span>
-                    </div>
-                    <div style="margin: 3px 0;">${stars}</div>
-                    <p style="margin: 0; color: #555; font-size: 13px;">${escapeHTML(review.comment)}</p>
-                `;
-                reviewsList.appendChild(card);
-            });
-        }
-
-        reviewForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            submitBtn.disabled = true;
-            submitBtn.innerText = "প্রসেসিং হচ্ছে...";
-
-            const name = document.getElementById('reviewerName').value;
-            const rating = parseInt(document.getElementById('reviewerRating').value);
-            const comment = document.getElementById('reviewerComment').value;
-            const date = new Date().toLocaleDateString('bn-BD');
-
-            const newReview = { name, rating, comment, date };
-
-            let currentReviews = localStorage.getItem('global_reviews_store') ? JSON.parse(localStorage.getItem('global_reviews_store')) : defaultReviews;
-            currentReviews.unshift(newReview);
-
-            localStorage.setItem('global_reviews_store', JSON.stringify(currentReviews));
-
-            setTimeout(() => {
-                alert("আপনার রিভিউটি সফলভাবে জমা ও প্রকাশ করা হয়েছে!");
-                reviewForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.innerText = "রিভিউ জমা দিন";
-                renderReviews(currentReviews);
-            }, 500);
-        });
-
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-
-        fetchReviews();
-    </script>
-</body>
-                        </html>
+  function fetchReviews() {
+    fetch(sheetUrl)
+      .then(response => response.text())
+      .then(data => {
+        // JSON ডাটা ফরম্যাট করা
+        const jsonString = data.substring(47, data.length - 2);
+        const json = JSON.parse(jsonString);
+        const rows = json.table.rows;
         
+        const container = document.getElementById('reviewsContainer');
+        const loading = document.getElementById('loading');
+        loading.style.display = 'none';
+        container.innerHTML = '';
+
+        if (!rows || rows.length === 0) {
+          container.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ দেওয়া হয়নি। প্রথম রিভিউটি আপনিই দিন!</p>';
+          return;
+        }
+
+        // নতুন রিভিউ সবার ওপরে দেখানোর জন্য উল্টো লুপ
+        for (let i = rows.length - 1; i >= 0; i--) {
+          const cells = rows[i].c;
+          if (!cells) continue;
+          
+          // গুগল শিটের কলাম অনুযায়ী তথ্য সংগ্রহ (Col B: Rating, Col C: Comment, Col D: Name)
+          const ratingVal = cells[1] ? cells[1].v : '5';
+          const commentVal = cells[2] ? cells[2].v : '';
+          const nameVal = cells[3] ? cells[3].v : 'বেনামী';
+
+          const card = document.createElement('div');
+          card.className = 'review-card';
+
+          const starCount = parseInt(ratingVal) || 5;
+          const stars = '⭐'.repeat(starCount);
+
+          card.innerHTML = `
+            <div class="review-header">
+              <span>${escapeHtml(nameVal)}</span>
+              <span class="rating-stars">${stars}</span>
+            </div>
+            <div class="review-comment">${escapeHtml(commentVal)}</div>
+          `;
+          container.appendChild(card);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching reviews:', error);
+        document.getElementById('loading').innerText = 'রিভিউ লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে পেজটি রিফ্রেশ করুন।';
+      });
+  }
+
+  // স্ক্রিপ্ট স্ক্রিপ্ট আক্রমণ (XSS) রোধ করতে সাহায্য করার ফাংশন
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // পেজ লোড হলেই রিভিউ নিয়ে আসা
+  window.onload = fetchReviews;
+</script>
+
+</body>
+</html>
