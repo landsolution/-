@@ -331,7 +331,6 @@
                 </div>
             </label>
 
-            <!-- নতুন যুক্ত করা ডিসিআর ফি সেবা -->
             <label class="service-card">
                 <input type="checkbox" class="service-checkbox" value="১২. ডিসিআর ফি (৳ ১,২০০)">
                 <div class="card-info">
@@ -351,16 +350,19 @@
 
         <h2 class="section-heading">গ্রাহকদের মতামত ও রিভিউ</h2>
         <div class="review-box">
-            <form id="reviewForm" class="review-form" onsubmit="submitReview(event)">
-                <input type="text" id="reviewerName" placeholder="আপনার নাম লিখুন..." required>
-                <select id="reviewerRating" required>
+            <!-- হিডেন আইফ্রেম: ফর্ম জমা হলেও পেজ রিফ্রেশ বা ব্লক হবে না -->
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){showSubmitSuccess();}"></iframe>
+            
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSem6w36UTMHSR97ktIT1x7q-sp1qvzU0eF88Xq7AYkGsaVm2A/formResponse" method="POST" target="hidden_iframe" id="reviewForm" class="review-form" onsubmit="submitted=true;">
+                <input type="text" name="entry.400078048" placeholder="আপনার নাম লিখুন..." required>
+                <select name="entry.1039370306" required>
                     <option value="5">⭐⭐⭐⭐⭐ (৫/৫ - চমৎকার)</option>
                     <option value="4">⭐⭐⭐⭐ (৪/৫ - ভালো)</option>
                     <option value="3">⭐⭐⭐ (৩/৫ - মাঝারি)</option>
                     <option value="2">⭐⭐ (২/৫ - খারাপ)</option>
                     <option value="1">⭐ (১/৫ - খুবই খারাপ)</option>
                 </select>
-                <textarea id="reviewerComment" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
+                <textarea name="entry.402049984" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
                 <button type="submit" id="submitBtn" class="review-submit-btn">রিভিউ জমা দিন</button>
             </form>
 
@@ -374,7 +376,7 @@
     </div>
 
     <!-- হোয়াটসঅ্যাপ ফ্লোটিং বাটন -->
-    <a href="https://wa.me/8801335556732?text=আসসালামু%20আলাইকুম%2C%20আমি%20ভূমি%20সেবা%20সম্পর্কে%20জানতে%20চাই।" target="_blank" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
+    <a href="https://api.whatsapp.com/send?phone=8801335556732&text=%E0%A6%AE%E0%A6%BF%20%E0%A6%AD%E0%A7%82%E0%A6%AE%E0%A6%BF%20%E0%A6%B8%E0%A7%87%E0%A6%AC%E0%A6%BE%20%E0%A6%B8%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A7%87%20%E0%A6%9C%E0%A6%BE%E0%A6%A8%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%8Wait" target="_blank" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
         💬
     </a>
 
@@ -383,7 +385,8 @@
     </footer>
 
     <script>
-        // হোয়াটসঅ্যাপ মেসেজ পাঠানো
+        var submitted = false;
+
         function sendToWhatsApp() {
             var checkboxes = document.querySelectorAll('.service-checkbox:checked');
             var phoneNumber = "8801335556732";
@@ -394,79 +397,47 @@
                 for (var i = 0; i < checkboxes.length; i++) {
                     text += (i + 1) + ". " + checkboxes[i].value + "\n";
                 }
-                text += "\nঅনুগ্রহ করে এ বিষয়ে তথ্য দিয়ে সাহায্য করুন।";
+                text += "\nঅনুগ্রহ করে এ বিষয়ে সাহায্য করুন।";
             } else {
                 text += " আমার ভূমি সেবা সম্পর্কে কিছু তথ্য প্রয়োজন।";
             }
 
-            var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
+            var encodedText = encodeURIComponent(text);
+            var waUrl = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodedText;
+            window.open(waUrl, '_blank');
         }
 
-        // গুগল ফর্ম রিভিউ সাবমিট
-        function submitReview(e) {
-            e.preventDefault();
-            var submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "জমা হচ্ছে...";
-
-            var name = document.getElementById('reviewerName').value;
-            var rating = document.getElementById('reviewerRating').value;
-            var comment = document.getElementById('reviewerComment').value;
-
-            var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSem6w36UTMHSR97ktIT1x7q-sp1qvzU0eF88Xq7AYkGsaVm2A/formResponse";
-            var formData = new FormData();
-            formData.append('entry.400078048', name);
-            formData.append('entry.1039370306', rating);
-            formData.append('entry.402049984', comment);
-
-            fetch(formUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
-            }).then(function() {
-                alert("ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা দেওয়া হয়েছে।");
-                document.getElementById('reviewForm').reset();
-                submitBtn.disabled = false;
-                submitBtn.innerText = "রিভিউ জমা দিন";
-                setTimeout(fetchReviews, 1500);
-            }).catch(function(error) {
-                alert("রিভিউ জমা দেওয়া সম্ভব হয়নি। আবার চেষ্টা করুন।");
-                submitBtn.disabled = false;
-                submitBtn.innerText = "রিভিউ জমা দিন";
-            });
+        function showSubmitSuccess() {
+            alert("ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা দেওয়া হয়েছে।");
+            document.getElementById('reviewForm').reset();
+            submitted = false;
+            setTimeout(fetchReviews, 2000);
         }
 
-        // গুগল শিট থেকে রিভিউ দেখা
         function fetchReviews() {
             var sheetId = '1Xqc1P7D8E_SyPYPYxO7OXpEmQg131TRgyS65MpoZgvI';
-            var csvSheetUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/export?format=csv';
+            var csvUrl = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/gviz/tq?tqx=out:csv';
             var reviewsList = document.getElementById('reviewsList');
 
-            fetch(csvSheetUrl)
+            fetch(csvUrl)
                 .then(function(res) { return res.text(); })
                 .then(function(csvText) {
                     var rows = parseCSV(csvText);
                     reviewsList.innerHTML = '';
 
                     if (!rows || rows.length <= 1) {
-                        reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ দেওয়া হয়নি। প্রথম রিভিউটি আপনিই দিন!</p>';
+                        reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ জমা দেওয়া হয়নি। প্রথম রিভিউটি আপনিই দিন!</p>';
                         return;
                     }
 
+                    var count = 0;
                     for (var i = rows.length - 1; i >= 1; i--) {
                         var row = rows[i];
                         if (!row || row.length < 2) continue;
 
-                        var ratingVal = '5';
-                        var commentVal = '';
-                        var nameVal = 'গ্রাহক';
-
-                        if (row.length === 3) {
-                            ratingVal = row[0]; commentVal = row[1]; nameVal = row[2];
-                        } else if (row.length >= 4) {
-                            ratingVal = row[1]; commentVal = row[2]; nameVal = row[3];
-                        }
+                        var nameVal = row[3] || row[2] || 'গ্রাহক';
+                        var ratingVal = row[1] || row[0] || '5';
+                        var commentVal = row[2] || row[1] || '';
 
                         var starCount = parseInt(ratingVal) || 5;
                         var stars = '⭐'.repeat(starCount);
@@ -480,10 +451,15 @@
                             '<div style="margin: 3px 0;">' + stars + '</div>' +
                             '<p style="margin: 0; color: #555; font-size: 13px;">' + escapeHTML(commentVal) + '</p>';
                         reviewsList.appendChild(card);
+                        count++;
+                    }
+
+                    if(count === 0) {
+                        reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ জমা দেওয়া হয়নি।</p>';
                     }
                 })
                 .catch(function(err) {
-                    reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ জমা হয়নি।</p>';
+                    reviewsList.innerHTML = '<p style="text-align:center; color:#888;">রিভিউ প্রদর্শন করার প্রস্তুতি চলছে...</p>';
                 });
         }
 
@@ -502,4 +478,25 @@
                 } else if ((c === '\r' || c === '\n') && !q) {
                     if (c === '\r' && next === '\n') { i++; }
                     r.push(row);
-        
+                    row = [''];
+                } else {
+                    row[row.length - 1] += c;
+                }
+            }
+            if (row.length > 1 || row[0] !== '') { r.push(row); }
+            return r;
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>'"]/g, function(tag) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag;
+            });
+        }
+
+        window.onload = function() {
+            fetchReviews();
+        };
+    </script>
+</body>
+</html>
