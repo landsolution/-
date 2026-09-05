@@ -366,21 +366,26 @@
 
         <h2 class="section-heading">গ্রাহকদের মতামত ও রিভিউ</h2>
         <div class="review-box">
-            <form id="reviewForm" class="review-form">
-                <input type="text" id="reviewerName" placeholder="আপনার নাম লিখুন..." required>
-                <select id="reviewerRating">
+            <!-- রিলোড ছাড়া গুগল ফর্মে সাবমিট করার জন্য অদৃশ্য আইফ্রেম -->
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {onFormSubmitted();}"></iframe>
+
+            <!-- গুগল ফর্মে ডাটা পাঠানোর আসল ফর্ম -->
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSem6w36UTMHSR97ktIT1x7q-sp1qvzU0eF88Xq7AYkGsaVm2A/formResponse" method="POST" target="hidden_iframe" id="reviewForm" class="review-form">
+                <input type="text" name="entry.400078048" id="reviewerName" placeholder="আপনার নাম লিখুন..." required>
+                <select name="entry.1039370306" id="reviewerRating" required>
                     <option value="5">⭐⭐⭐⭐⭐ (৫/৫ - চমৎকার)</option>
                     <option value="4">⭐⭐⭐⭐ (৪/৫ - ভালো)</option>
                     <option value="3">⭐⭐⭐ (৩/৫ - মাঝারি)</option>
                     <option value="2">⭐⭐ (২/৫ - খারাপ)</option>
                     <option value="1">⭐ (১/৫ - খুবই খারাপ)</option>
                 </select>
-                <textarea id="reviewerComment" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
+                <textarea name="entry.402049984" id="reviewerComment" placeholder="আপনার অভিজ্ঞতা এবং মতামত লিখুন..." rows="3" required></textarea>
                 <button type="submit" id="submitBtn" class="review-submit-btn">রিভিউ জমা দিন</button>
             </form>
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
 
+            <!-- গুগল শিট থেকে লাইভ আসা রিভিউ দেখার কন্টেইনার -->
             <div id="reviewsList">
                 <p style="text-align:center; color:#888;">রিভিউ লোড করা হচ্ছে...</p>
             </div>
@@ -431,75 +436,72 @@
         }
     </script>
 
-    <!-- Public Live Cloud Review Engine -->
+    <!-- Dynamic Google Sheets Review Engine Script -->
     <script>
+        let submitted = false;
         const reviewForm = document.getElementById('reviewForm');
         const submitBtn = document.getElementById('submitBtn');
         const reviewsList = document.getElementById('reviewsList');
 
-        const defaultReviews = [
-            { name: "মোহাম্মদ রফিক", rating: 5, comment: "অনলাইন খতিয়ান তোলার কাজ খুব দ্রুত করে দিয়েছেন। ধন্যবাদ!", date: "০৪/০৯/২০২৬" },
-            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের সার্ভিস খুবই চমৎকার।", date: "০৩/০৯/২০২৬" }
-        ];
-
-        function fetchReviews() {
-            let localData = localStorage.getItem('global_reviews_store');
-            let reviews = localData ? JSON.parse(localData) : defaultReviews;
-            renderReviews(reviews);
-        }
-
-        function renderReviews(reviews) {
-            reviewsList.innerHTML = '';
-            reviews.forEach(review => {
-                const stars = '⭐'.repeat(review.rating);
-                const card = document.createElement('div');
-                card.className = 'live-review-card';
-                card.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong style="color: #333; font-size: 14px;">${escapeHTML(review.name)}</strong>
-                        <span style="font-size: 11px; color: #888;">${review.date}</span>
-                    </div>
-                    <div style="margin: 3px 0;">${stars}</div>
-                    <p style="margin: 0; color: #555; font-size: 13px;">${escapeHTML(review.comment)}</p>
-                `;
-                reviewsList.appendChild(card);
-            });
-        }
-
-        reviewForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+        reviewForm.addEventListener('submit', function() {
+            submitted = true;
             submitBtn.disabled = true;
-            submitBtn.innerText = "প্রসেসিং হচ্ছে...";
-
-            const name = document.getElementById('reviewerName').value;
-            const rating = parseInt(document.getElementById('reviewerRating').value);
-            const comment = document.getElementById('reviewerComment').value;
-            const date = new Date().toLocaleDateString('bn-BD');
-
-            const newReview = { name, rating, comment, date };
-
-            let currentReviews = localStorage.getItem('global_reviews_store') ? JSON.parse(localStorage.getItem('global_reviews_store')) : defaultReviews;
-            currentReviews.unshift(newReview);
-
-            localStorage.setItem('global_reviews_store', JSON.stringify(currentReviews));
-
-            setTimeout(() => {
-                alert("আপনার রিভিউটি সফলভাবে জমা ও প্রকাশ করা হয়েছে!");
-                reviewForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.innerText = "রিভিউ জমা দিন";
-                renderReviews(currentReviews);
-            }, 500);
+            submitBtn.innerText = "জমা হচ্ছে...";
         });
 
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
+        function onFormSubmitted() {
+            alert("ধন্যবাদ! আপনার রিভিউটি সফলভাবে জমা ও প্রকাশ করা হয়েছে।");
+            reviewForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.innerText = "রিভিউ জমা দিন";
+            submitted = false;
+            setTimeout(fetchReviews, 2000); // গুগল শিট সিঙ্ক হতে ২ সেকেন্ড পর ডাটা আবার রিফ্রেশ
         }
 
-        fetchReviews();
-    </script>
-</body>
-</html>
+        const sheetId = '1Xqc1P7D8E_SyPYPYxO7OXpEmQg131TRgyS65MpoZgvI';
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+
+        function fetchReviews() {
+            fetch(sheetUrl)
+                .then(response => response.text())
+                .then(data => {
+                    const jsonString = data.substring(47, data.length - 2);
+                    const json = JSON.parse(jsonString);
+                    const rows = json.table.rows;
+
+                    reviewsList.innerHTML = '';
+
+                    if (!rows || rows.length === 0) {
+                        reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ দেওয়া হয়নি। প্রথম রিভিউটি আপনিই দিন!</p>';
+                        return;
+                    }
+
+                    // নতুন রিভিউ সবার উপরে দেখানোর জন্য উল্টো অর্ডার
+                    for (let i = rows.length - 1; i >= 0; i--) {
+                        const cells = rows[i].c;
+                        if (!cells) continue;
+
+                        const dateVal = cells[0] ? (cells[0].f || cells[0].v) : '';
+                        const ratingVal = cells[1] ? cells[1].v : '5';
+                        const commentVal = cells[2] ? cells[2].v : '';
+                        const nameVal = cells[3] ? cells[3].v : 'বেনামী';
+
+                        const starCount = parseInt(ratingVal) || 5;
+                        const stars = '⭐'.repeat(starCount);
+
+                        const card = document.createElement('div');
+                        card.className = 'live-review-card';
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <strong style="color: #333; font-size: 14px;">${escapeHTML(nameVal)}</strong>
+                                <span style="font-size: 11px; color: #888;">${escapeHTML(String(dateVal))}</span>
+                            </div>
+                            <div style="margin: 3px 0;">${stars}</div>
+                            <p style="margin: 0; color: #555; font-size: 13px;">${escapeHTML(commentVal)}</p>
+                        `;
+                        reviewsList.appendChild(card);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching reviews:', error);
+   
