@@ -27,31 +27,32 @@
         header { 
             background: linear-gradient(135deg, #006a4e 0%, #004d39 100%); 
             color: #fff; 
-            padding: 30px 15px; 
+            padding: 25px 15px; 
             text-align: center; 
             border-bottom: 5px solid var(--gov-red); 
         }
-        header h1 { font-size: 32px; font-weight: bold; margin-bottom: 8px; }
-        header p { font-size: 18px; opacity: 0.95; }
+        header h1 { font-size: 28px; font-weight: bold; margin-bottom: 6px; }
+        header p { font-size: 16px; opacity: 0.95; }
 
-        .main-container { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
+        .main-container { max-width: 1000px; margin: 20px auto; padding: 0 10px; }
         
         .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
             text-align: center;
         }
         .stat-card {
+            flex: 1 1 45%;
             background: #fff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             box-shadow: var(--shadow);
             border-bottom: 3px solid var(--gov-green);
         }
-        .stat-number { font-size: 22px; font-weight: bold; color: var(--gov-green); }
-        .stat-label { font-size: 14px; color: #555; }
+        .stat-number { font-size: 20px; font-weight: bold; color: var(--gov-green); }
+        .stat-label { font-size: 13px; color: #555; }
 
         .instruction-box { 
             background: #e8f5e9; 
@@ -59,25 +60,34 @@
             padding: 12px 15px; 
             margin-bottom: 20px; 
             border-radius: 4px; 
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold; 
             color: #1b5e20; 
         }
         
         .section-heading {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             color: var(--gov-green);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-bottom: 35px; }
+        /* 2-Column Side-by-Side Grid (ডানে একটা, বামে একটা) */
+        .service-grid { 
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important; 
+            margin-bottom: 30px !important; 
+            justify-content: space-between;
+        }
 
-        /* Service Cards & Checkbox Fix */
+        /* 50% width based 2 Columns */
         .service-card { 
+            width: calc(50% - 5px) !important;
+            box-sizing: border-box !important;
             background: #fff; 
-            padding: 15px; 
+            padding: 10px 8px; 
             border-radius: 8px; 
             box-shadow: var(--shadow); 
             transition: var(--transition); 
@@ -86,9 +96,7 @@
             align-items: center; 
             cursor: pointer; 
             user-select: none;
-            position: relative;
         }
-        .service-card:hover { border-color: var(--gov-green); }
         
         .service-card.selected { 
             border-color: var(--gov-green) !important; 
@@ -96,19 +104,19 @@
         }
 
         .custom-checkbox { 
-            width: 22px; 
-            height: 22px; 
+            width: 18px; 
+            height: 18px; 
             border: 2px solid var(--gov-green); 
             border-radius: 4px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             background: #fff; 
-            margin-right: 12px;
+            margin-right: 6px;
             flex-shrink: 0; 
             font-weight: bold;
             color: #fff;
-            font-size: 14px;
+            font-size: 12px;
         }
         
         .service-card.selected .custom-checkbox { 
@@ -120,30 +128,30 @@
         }
 
         .card-info { display: flex; flex-direction: column; pointer-events: none; }
-        .card-title { font-size: 17px; font-weight: bold; color: #1a2530; }
-        .card-price { font-size: 15px; font-weight: bold; color: var(--gov-green); margin-top: 2px; }
+        .card-title { font-size: 13px; font-weight: bold; color: #1a2530; line-height: 1.2; }
+        .card-price { font-size: 12px; font-weight: bold; color: var(--gov-green); margin-top: 2px; }
 
         .contact-panel { 
             background: #fff; 
-            padding: 25px; 
+            padding: 20px; 
             border-radius: 8px; 
             box-shadow: var(--shadow); 
             text-align: center; 
             border-left: 5px solid var(--gov-red); 
-            margin-bottom: 40px; 
+            margin-bottom: 30px; 
         }
-        .contact-panel h2 { font-size: 22px; color: var(--gov-green); margin-bottom: 8px; }
-        .contact-panel p { font-size: 16px; margin-bottom: 15px; color: #444; }
+        .contact-panel h2 { font-size: 20px; color: var(--gov-green); margin-bottom: 8px; }
+        .contact-panel p { font-size: 15px; margin-bottom: 12px; color: #444; }
         
         .whatsapp-action-btn { 
             display: inline-flex; 
             align-items: center; 
             justify-content: center;
-            gap: 10px; 
+            gap: 8px; 
             background-color: #25d366; 
             color: #fff; 
-            padding: 12px 24px; 
-            font-size: 18px; 
+            padding: 10px 20px; 
+            font-size: 16px; 
             font-weight: bold; 
             border-radius: 50px; 
             text-decoration: none; 
@@ -154,10 +162,10 @@
 
         .review-box {
             background: #fff;
-            padding: 20px;
+            padding: 18px;
             border-radius: 8px;
             box-shadow: var(--shadow);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-top: 4px solid var(--gov-green);
         }
         .review-form {
@@ -170,7 +178,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 15px;
+            font-size: 14px;
             font-family: inherit;
         }
         .review-submit-btn {
@@ -179,13 +187,13 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
         }
         .live-review-card {
             background: #f9f9f9;
-            padding: 12px;
+            padding: 10px;
             border-left: 4px solid var(--gov-green);
             border-radius: 4px;
             margin-bottom: 10px;
@@ -193,12 +201,12 @@
 
         .whatsapp-float { 
             position: fixed; 
-            bottom: 25px; 
-            right: 25px; 
+            bottom: 20px; 
+            right: 20px; 
             background-color: #25d366; 
             color: #fff; 
-            width: 55px; 
-            height: 55px; 
+            width: 50px; 
+            height: 50px; 
             border-radius: 50%; 
             box-shadow: 2px 4px 12px rgba(0,0,0,0.25); 
             z-index: 999; 
@@ -207,14 +215,15 @@
             justify-content: center; 
             cursor: pointer; 
             border: none; 
+            font-size: 22px;
         }
 
         footer { 
             background: #1e2b37; 
             color: #fff; 
             text-align: center; 
-            padding: 20px 15px; 
-            font-size: 14px; 
+            padding: 18px 10px; 
+            font-size: 13px; 
         }
     </style>
 </head>
@@ -242,7 +251,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-number">২৪/৭</div>
-                <div class="stat-label">অনলাইন গ্রাহক সহায়তা</div>
+                <div class="stat-label">অনলাইন সহায়তা</div>
             </div>
         </div>
 
@@ -252,6 +261,7 @@
 
         <h2 class="section-heading">আমাদের ডিজিটাল সেবাসমূহ</h2>
 
+        <!-- 2 Columns Side by Side Layout -->
         <div class="service-grid">
             <div class="service-card" onclick="toggleService(this, '১. খারিজের আবেদন (৳ ৫০০)')">
                 <div class="custom-checkbox"></div>
@@ -288,7 +298,7 @@
             <div class="service-card" onclick="toggleService(this, '৫. নামজারি খতিয়ানের সার্টিফাইড কপি (৳ ৩,৫০০)')">
                 <div class="custom-checkbox"></div>
                 <div class="card-info">
-                    <div class="card-title">৫. নামজারি খতিয়ানের সার্টিফাইড কপি</div>
+                    <div class="card-title">৫. নামজারি সার্টিফাইড কপি</div>
                     <div class="card-price">৳ ৩,৫০০</div>
                 </div>
             </div>
@@ -312,7 +322,7 @@
             <div class="service-card" onclick="toggleService(this, '৮. প্লট বা দাগ পরিমাপ বের করা (৳ ৩০০)')">
                 <div class="custom-checkbox"></div>
                 <div class="card-info">
-                    <div class="card-title">৮. প্লট বা দাগ পরিমাপ বের করা</div>
+                    <div class="card-title">৮. প্লট পরিমাপ বের করা</div>
                     <div class="card-price">৳ ৩০০</div>
                 </div>
             </div>
@@ -320,7 +330,7 @@
             <div class="service-card" onclick="toggleService(this, '৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য বের করা (৳ ১০০)')">
                 <div class="custom-checkbox"></div>
                 <div class="card-info">
-                    <div class="card-title">৯. নাম বা দাগ নম্বর দিয়ে জমির তথ্য</div>
+                    <div class="card-title">৯. জমির তথ্য বের করা</div>
                     <div class="card-price">৳ ১০০</div>
                 </div>
             </div>
@@ -472,11 +482,11 @@
 
                     reviewCard.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <strong style="color: #333; font-size: 15px;">${review.name}</strong>
+                            <strong style="color: #333; font-size: 14px;">${review.name}</strong>
                             <span style="font-size: 11px; color: #888;">${review.date}</span>
                         </div>
                         <div style="margin: 3px 0;">${stars}</div>
-                        <p style="margin: 0; color: #555; font-size: 14px;">${review.comment}</p>
+                        <p style="margin: 0; color: #555; font-size: 13px;">${review.comment}</p>
                     `;
 
                     reviewsList.appendChild(reviewCard);
@@ -488,5 +498,5 @@
     </script>
 
 </body>
-                  </html>
-  
+                    </html>
+                        
