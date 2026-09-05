@@ -50,8 +50,8 @@
             text-align: center;
         }
         .stat-card {
-            flex: 1 1 30%;
-            min-width: 140px;
+            flex: 1 1 20%;
+            min-width: 130px;
             background: #fff;
             padding: 10px;
             border-radius: 8px;
@@ -88,7 +88,6 @@
             justify-content: space-between;
         }
 
-        /* কার্ড সিলেক্ট সিএসএস (ডিফল্ট HTML Checkbox ব্যবহার করা হয়েছে) */
         .service-card { 
             width: calc(50% - 5px);
             box-sizing: border-box;
@@ -235,10 +234,6 @@
                 <div class="stat-number">২৪/৭</div>
                 <div class="stat-label">অনলাইন সহায়তা</div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number">১,৫০০+</div>
-                <div class="stat-label">মোট ভিজিটর</div>
-            </div>
         </div>
 
         <div class="instruction-box">
@@ -335,12 +330,21 @@
                     <span class="card-price">৳ ৫০০</span>
                 </div>
             </label>
+
+            <!-- নতুন যুক্ত করা ডিসিআর ফি সেবা -->
+            <label class="service-card">
+                <input type="checkbox" class="service-checkbox" value="১২. ডিসিআর ফি (৳ ১,২০০)">
+                <div class="card-info">
+                    <span class="card-title">১২. ডিসিআর ফি</span>
+                    <span class="card-price">৳ ১,২০০</span>
+                </div>
+            </label>
         </div>
 
         <div class="contact-panel">
             <h2>নির্বাচিত সেবা নিয়ে সরাসরি কথা বলুন</h2>
             <p style="margin-bottom: 12px;">উপরে আপনার পছন্দমতো সেবায় টিক চিহ্ন দিয়ে নিচের বাটনে ক্লিক করুন।</p>
-            <button onclick="sendToWhatsApp()" class="whatsapp-action-btn">
+            <button type="button" onclick="sendToWhatsApp()" class="whatsapp-action-btn">
                 WhatsApp-এ অর্ডার পাঠান
             </button>
         </div>
@@ -369,7 +373,7 @@
 
     </div>
 
-    <!-- হোয়াটসঅ্যাপ ফ্লোটিং বাটন (সরাসরি লিংক) -->
+    <!-- হোয়াটসঅ্যাপ ফ্লোটিং বাটন -->
     <a href="https://wa.me/8801335556732?text=আসসালামু%20আলাইকুম%2C%20আমি%20ভূমি%20সেবা%20সম্পর্কে%20জানতে%20চাই।" target="_blank" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
         💬
     </a>
@@ -379,7 +383,7 @@
     </footer>
 
     <script>
-        // হোয়াটসঅ্যাপে সরাসরি তথ্য পাঠানো
+        // হোয়াটসঅ্যাপ মেসেজ পাঠানো
         function sendToWhatsApp() {
             var checkboxes = document.querySelectorAll('.service-checkbox:checked');
             var phoneNumber = "8801335556732";
@@ -479,7 +483,7 @@
                     }
                 })
                 .catch(function(err) {
-                    reviewsList.innerHTML = '<p style="text-align:center; color:#888;">রিভিউ লোড করা যাচ্ছে না।</p>';
+                    reviewsList.innerHTML = '<p style="text-align:center; color:#888;">এখনো কোনো রিভিউ জমা হয়নি।</p>';
                 });
         }
 
@@ -498,9 +502,4 @@
                 } else if ((c === '\r' || c === '\n') && !q) {
                     if (c === '\r' && next === '\n') { i++; }
                     r.push(row);
-                    row = [''];
-                } else {
-                    row[row.length - 1] += c;
-                }
-            }
-            if (row.lengt
+        
