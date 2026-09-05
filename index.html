@@ -24,15 +24,36 @@
             line-height: 1.5;
         }
 
+        /* Header with Land Image Background Overlay */
         header { 
-            background: linear-gradient(135deg, #006a4e 0%, #004d39 100%); 
+            background: linear-gradient(rgba(0, 70, 50, 0.85), rgba(0, 70, 50, 0.85)), 
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
             color: #fff; 
-            padding: 25px 15px; 
+            padding: 35px 15px 25px 15px; 
             text-align: center; 
             border-bottom: 5px solid var(--gov-red); 
+            position: relative;
         }
-        header h1 { font-size: 28px; font-weight: bold; margin-bottom: 6px; }
-        header p { font-size: 16px; opacity: 0.95; }
+        header h1 { font-size: 30px; font-weight: bold; margin-bottom: 6px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        header p { font-size: 16px; opacity: 0.95; margin-bottom: 12px; }
+
+        /* About Us Button in Header */
+        .about-btn {
+            background-color: #ffffff;
+            color: var(--gov-green);
+            border: none;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        .about-btn:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.03);
+        }
 
         .main-container { max-width: 1000px; margin: 20px auto; padding: 0 10px; }
         
@@ -73,7 +94,7 @@
             text-align: center;
         }
 
-        /* 2-Column Side-by-Side Grid (ডানে একটা, বামে একটা) */
+        /* 2-Column Side-by-Side Grid */
         .service-grid { 
             display: flex !important;
             flex-wrap: wrap !important;
@@ -82,7 +103,6 @@
             justify-content: space-between;
         }
 
-        /* 50% width based 2 Columns */
         .service-card { 
             width: calc(50% - 5px) !important;
             box-sizing: border-box !important;
@@ -218,6 +238,51 @@
             font-size: 22px;
         }
 
+        /* About Modal Popup Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-top: 5px solid var(--gov-green);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+        }
+        .modal-title {
+            color: var(--gov-green);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .modal-body {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+        }
+
         footer { 
             background: #1e2b37; 
             color: #fff; 
@@ -232,6 +297,7 @@
     <header>
         <h1>Smart Land Service</h1>
         <p>সহজ, নিরাপদ ও বিশ্বস্ত ডিজিটাল ভূমি সেবা পোর্টাল</p>
+        <button class="about-btn" onclick="openAboutModal()">ℹ️ আমাদের সম্পর্কে জানুন</button>
     </header>
 
     <div class="main-container">
@@ -261,7 +327,6 @@
 
         <h2 class="section-heading">আমাদের ডিজিটাল সেবাসমূহ</h2>
 
-        <!-- 2 Columns Side by Side Layout -->
         <div class="service-grid">
             <div class="service-card" onclick="toggleService(this, '১. খারিজের আবেদন (৳ ৫০০)')">
                 <div class="custom-checkbox"></div>
@@ -384,6 +449,25 @@
 
     </div>
 
+    <!-- About Modal Structure -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAboutModal()">&times;</span>
+            <div class="modal-title">স্মার্ট ভূমি সেবা পোর্টালে আপনাকে স্বাগতম</div>
+            <div class="modal-body">
+                <p><strong>আমাদের লক্ষ্য:</strong> সাধারণ মানুষকে কোনো প্রকার ভোগান্তি ছাড়া সরকারি ও ডিজিটাল ভূমি সংক্রান্ত সকল সেবা দ্রুত ও সহজভাবে পৌঁছে দেওয়া।</p>
+                <br>
+                <p><strong>কেন আমরা শতভাগ অথেন্টিক?</strong></p>
+                <ul style="margin-left: 20px; margin-top: 5px;">
+                    <li>আমরা সরাসরি সরকারি অনুমোদিত অনলাইন পোর্টাল হতে তথ্য সংগ্রহ ও আবেদন সম্পন্ন করি।</li>
+                    <li>৫,০০০+ এর বেশি সফল সেবা প্রদানের বিশ্বস্ত অভিজ্ঞতা।</li>
+                    <li>আমাদের গ্রাহকদের লাইভ রিভিউ এবং রেটিং সরাসরি আমাদের প্ল্যাটফর্মে সংরক্ষিত হয়।</li>
+                    <li>যেকোনো সেবার জন্য ২৪/৭ সরাসরি হোয়াটসঅ্যাপ সহায়তা প্রদান করা হয়।</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <button onclick="sendToWhatsApp()" class="whatsapp-float" title="হোয়াটসঅ্যাপে যোগাযোগ করুন">
         💬
     </button>
@@ -392,7 +476,7 @@
         <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
-    <!-- Service Selection & Direct WhatsApp Script -->
+    <!-- Service Selection, Direct WhatsApp & About Modal Script -->
     <script>
         var selectedServices = [];
 
@@ -425,6 +509,22 @@
             var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(text);
             window.location.href = url;
         }
+
+        /* Modal JS */
+        function openAboutModal() {
+            document.getElementById('aboutModal').style.display = 'flex';
+        }
+
+        function closeAboutModal() {
+            document.getElementById('aboutModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('aboutModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 
     <!-- Firebase SDK Module -->
@@ -443,60 +543,4 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const reviewsRef = ref(database, 'reviews');
-
-        document.getElementById('reviewForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('reviewerName').value;
-            const rating = document.getElementById('reviewerRating').value;
-            const comment = document.getElementById('reviewerComment').value;
-            const timestamp = new Date().toLocaleDateString('bn-BD');
-
-            push(reviewsRef, {
-                name: name,
-                rating: parseInt(rating),
-                comment: comment,
-                date: timestamp
-            }).then(() => {
-                alert("ধন্যবাদ! আপনার রিভিউটি পোস্ট হয়েছে।");
-                document.getElementById('reviewForm').reset();
-            }).catch((err) => {
-                alert("ত্রুটি: " + err.message);
-            });
-        });
-
-        onValue(reviewsRef, (snapshot) => {
-            const reviewsList = document.getElementById('reviewsList');
-            reviewsList.innerHTML = '';
-
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const reviewsArray = Object.values(data).reverse();
-
-                reviewsArray.forEach((review) => {
-                    const stars = '⭐'.repeat(review.rating);
-                    const reviewCard = document.createElement('div');
-                    reviewCard.className = 'live-review-card';
-
-                    reviewCard.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <strong style="color: #333; font-size: 14px;">${review.name}</strong>
-                            <span style="font-size: 11px; color: #888;">${review.date}</span>
-                        </div>
-                        <div style="margin: 3px 0;">${stars}</div>
-                        <p style="margin: 0; color: #555; font-size: 13px;">${review.comment}</p>
-                    `;
-
-                    reviewsList.appendChild(reviewCard);
-                });
-            } else {
-                reviewsList.innerHTML = '<p style="color: #888; text-align: center;">এখনও কোনো রিভিউ নেই। আপনার মতামত দিন!</p>';
-            }
-        });
-    </script>
-
-</body>
-                    </html>
-                        
+        const database = getDatab
