@@ -442,9 +442,7 @@
 
             <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
 
-            <div id="reviewsList">
-                <p style="color: #888; text-align: center;">রিভিউ লোড হচ্ছে...</p>
-            </div>
+            <div id="reviewsList"></div>
         </div>
 
     </div>
@@ -476,7 +474,7 @@
         <p>© ২০২৬ স্মার্ট ভূমি সেবা | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
-    <!-- Service Selection, Direct WhatsApp & About Modal Script -->
+    <!-- Service Selection, WhatsApp & About Modal Script -->
     <script>
         var selectedServices = [];
 
@@ -527,21 +525,21 @@
         }
     </script>
 
-    <!-- Native Firebase REST API Integration -->
+    <!-- Instant Review System (No External Database Dependency) -->
     <script>
-        const DB_URL = "https://review-1b10c-default-rtdb.firebaseio.com/reviews.json";
-
         const reviewForm = document.getElementById('reviewForm');
-        const submitBtn = document.getElementById('submitBtn');
         const reviewsList = document.getElementById('reviewsList');
 
-        // Load Reviews Function
-        function loadReviews() {
-            fetch(DB_URL)
-                .then(response => response.json())
-                .then(data => {
-                    reviewsList.innerHTML = '';
-                    if (data) {
-                        const reviewsArray = Object.values(data).reverse();
-                        reviewsArray.forEach(review => {
-                            const stars = '⭐'.re
+        // Default Sample Reviews for First Time Users
+        const defaultReviews = [
+            { name: "মোহাম্মদ রফিক", rating: 5, comment: "খুব দ্রুত অনলাইন খতিয়ান হাতে পেয়েছি। ধন্যবাদ অসাধারণ সেবার জন্য!", date: "০৪/০৯/২০২৬" },
+            { name: "আব্দুল করিম", rating: 5, comment: "খাজনার আবেদনের কাজটা ১ ঘণ্টার মধ্যেই কমপ্লিট করে দিয়েছে।", date: "০৩/০৯/২০২৬" }
+        ];
+
+        // Fetch Local Reviews
+        function getReviews() {
+            const saved = localStorage.getItem('smart_land_reviews');
+            if (saved) {
+                return JSON.parse(saved);
+            } else {
+                localStorage.setItem('smart_land_reviews', JSON.str   
